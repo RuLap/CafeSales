@@ -1,6 +1,0 @@
-﻿services:
-  cafesales:
-    image: cafesales
-    build:
-      context: .
-      dockerfile: CafeSales/Dockerfile
