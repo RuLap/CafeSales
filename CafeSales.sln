@@ -4,7 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeSales", "CafeSales\Cafe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD4024E6-28BF-45AF-8839-925480DF68E7}"
 	ProjectSection(SolutionItems) = preProject
-		compose.yaml = compose.yaml
+		.env = .env
+		.gitignore = .gitignore
+		docker-compose.yaml = docker-compose.yaml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global

@@ -1,16 +1,15 @@
+using CafeSales.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var host = Environment.GetEnvironmentVariable("POSTGRES_HOST");
-var db = Environment.GetEnvironmentVariable("POSTGRES_DB");
-var user = Environment.GetEnvironmentVariable("POSTGRES_USER");
-var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-
-var connectionString = $"Host={host};Database={db};Username={user};Password={password}";
-
+var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONN_STRING");
+builder.Services.AddDbContext<CafeDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
