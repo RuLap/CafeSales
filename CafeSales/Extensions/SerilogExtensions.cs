@@ -10,6 +10,7 @@ public static class SerilogExtensions
         host.UseSerilog((ctx, lc) =>
         {
             lc.WriteTo.Console();
+            lc.WriteTo.Seq(seqUrl);
         });
     }
 }
