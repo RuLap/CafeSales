@@ -10,7 +10,7 @@ public class PaymentType
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public Guid Id { get; set; }
 
-    public string Name { get; } = string.Empty;
+    public string Name { get; private set; } = string.Empty;
     
     
     private PaymentType() { }

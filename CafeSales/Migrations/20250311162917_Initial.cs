@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CafeSales.Migrations
 {
     /// <inheritdoc />
@@ -19,7 +21,8 @@ namespace CafeSales.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,7 +34,8 @@ namespace CafeSales.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,22 +116,22 @@ namespace CafeSales.Migrations
             migrationBuilder.InsertData(
                 schema: "public",
                 table: "order_statuses",
-                column: "Id",
-                values: new object[]
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
                 {
-                    new Guid("1f429036-0a5e-4888-a74f-cef8275f5df8"),
-                    new Guid("51ed485a-d259-4b1e-9418-dd63147451ee"),
-                    new Guid("76dfd036-cb2d-4a8a-ac50-1ed8a5908ba7")
+                    { new Guid("1f429036-0a5e-4888-a74f-cef8275f5df8"), "Отменен" },
+                    { new Guid("51ed485a-d259-4b1e-9418-dd63147451ee"), "Завершен" },
+                    { new Guid("76dfd036-cb2d-4a8a-ac50-1ed8a5908ba7"), "В процессе" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "public",
                 table: "payment_types",
-                column: "Id",
-                values: new object[]
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
                 {
-                    new Guid("16a1fec6-a9ea-40a9-b547-cb228401ccf9"),
-                    new Guid("9fdbe7bf-68ca-4ef9-ac4a-aa8b78584a7f")
+                    { new Guid("16a1fec6-a9ea-40a9-b547-cb228401ccf9"), "Наличный" },
+                    { new Guid("9fdbe7bf-68ca-4ef9-ac4a-aa8b78584a7f"), "Безналичный" }
                 });
 
             migrationBuilder.CreateIndex(

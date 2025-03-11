@@ -74,6 +74,10 @@ namespace CafeSales.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("order_statuses", "public");
@@ -81,15 +85,18 @@ namespace CafeSales.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("76dfd036-cb2d-4a8a-ac50-1ed8a5908ba7")
+                            Id = new Guid("76dfd036-cb2d-4a8a-ac50-1ed8a5908ba7"),
+                            Name = "В процессе"
                         },
                         new
                         {
-                            Id = new Guid("51ed485a-d259-4b1e-9418-dd63147451ee")
+                            Id = new Guid("51ed485a-d259-4b1e-9418-dd63147451ee"),
+                            Name = "Завершен"
                         },
                         new
                         {
-                            Id = new Guid("1f429036-0a5e-4888-a74f-cef8275f5df8")
+                            Id = new Guid("1f429036-0a5e-4888-a74f-cef8275f5df8"),
+                            Name = "Отменен"
                         });
                 });
 
@@ -98,6 +105,10 @@ namespace CafeSales.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("payment_types", "public");
@@ -105,11 +116,13 @@ namespace CafeSales.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9fdbe7bf-68ca-4ef9-ac4a-aa8b78584a7f")
+                            Id = new Guid("9fdbe7bf-68ca-4ef9-ac4a-aa8b78584a7f"),
+                            Name = "Безналичный"
                         },
                         new
                         {
-                            Id = new Guid("16a1fec6-a9ea-40a9-b547-cb228401ccf9")
+                            Id = new Guid("16a1fec6-a9ea-40a9-b547-cb228401ccf9"),
+                            Name = "Наличный"
                         });
                 });
 
