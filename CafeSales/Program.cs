@@ -1,5 +1,8 @@
 using CafeSales.Data;
 using CafeSales.Extensions;
+using CafeSales.Repository;
+using CafeSales.Services;
+using CafeSales.Services.Interfaces;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -29,10 +32,17 @@ try
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    
+    builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+    
+    builder.Services.AddScoped<IProductService, ProductService>();
 
     var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONN_STRING");
     builder.Services.AddDbContext<CafeDbContext>(options =>
         options.UseNpgsql(connectionString));
+    
+    builder.Services.AddScoped<DbContext>(provider => 
+        provider.GetRequiredService<CafeDbContext>());
 
     var app = builder.Build();
 
