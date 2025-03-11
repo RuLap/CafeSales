@@ -1,4 +1,6 @@
 ﻿using CafeSales.Models;
+using CafeSales.UnitOfWork;
+using CafeSales.UnitOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace CafeSales.Data;
@@ -16,6 +18,11 @@ public class CafeDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Product>().HasIndex(p => p.Name).IsUnique();
+        
+        modelBuilder.Entity<Order>()
+            .HasMany(o => o.Products)
+            .WithOne(op => op.Order)
+            .HasForeignKey(op => op.OrderId);
         
         modelBuilder.Entity<OrderProduct>().HasKey(op => new { op.OrderId, op.ProductId });
         
@@ -53,5 +60,10 @@ public class CafeDbContext : DbContext
             PaymentType.Card,
             PaymentType.Cash
         );
+    }
+    
+    public Task<ITransaction> BeginTransactionAsync()
+    {
+        return Task.FromResult(new EfTransaction(null) as ITransaction);
     }
 }

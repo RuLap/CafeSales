@@ -16,12 +16,12 @@ public class Order
     public DateTime Time { get; set; }
     
     public Guid StatusId { get; private set; }
-    public OrderStatus Status { get; private set; }
+    public virtual OrderStatus Status { get; private set; }
     
     public Guid PaymentTypeId { get; set; }
-    public PaymentType PaymentType { get; set; }
+    public virtual PaymentType PaymentType { get; set; }
 
-    public List<OrderProduct> Products { get; set; } = new();
+    public virtual List<OrderProduct> Products { get; set; } = new();
     
     public void ChangeStatus(OrderStatus newStatus, IOrderStatusChangeValidator validator)
     {

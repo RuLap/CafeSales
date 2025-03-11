@@ -1,8 +1,13 @@
 using CafeSales.Data;
 using CafeSales.Extensions;
+using CafeSales.Models;
+using CafeSales.Models.Validators;
+using CafeSales.Models.Validators.Interfaces;
 using CafeSales.Repository;
 using CafeSales.Services;
 using CafeSales.Services.Interfaces;
+using CafeSales.UnitOfWork;
+using CafeSales.UnitOfWork.Interfaces;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -32,10 +37,16 @@ try
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-    
+
+    builder.Services.AddScoped<IOrderStatusChangeValidator, OrderStatusChangeValidator>();
+        
     builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+    builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
     
     builder.Services.AddScoped<IProductService, ProductService>();
+    builder.Services.AddScoped<IOrderService, OrderService>();
+    
+    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
     var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONN_STRING");
     builder.Services.AddDbContext<CafeDbContext>(options =>
@@ -45,6 +56,12 @@ try
         provider.GetRequiredService<CafeDbContext>());
 
     var app = builder.Build();
+    
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<CafeDbContext>();
+        db.Database.Migrate();
+    }
 
     if (app.Environment.IsDevelopment())
     {
