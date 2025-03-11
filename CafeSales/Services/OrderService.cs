@@ -59,8 +59,6 @@ public class OrderService : IOrderService
         try
         {
             var order = await _orderRepository.GetByIdAsync(id);
-            Log.Information($"order: {order.PaymentType}");
-            Log.Information($"order: {order.PaymentType.Name}");
             var dto = order.ToDTO();
             
             return dto;

@@ -90,7 +90,7 @@ public class ProductService : IProductService
         var product = await _productRepository.GetByIdAsync(id);
         if (product == null)
         {
-            throw new NotFoundException("Product not found", $"Product with id: {id} was not found");
+            throw new NotFoundException("Товар не найден", $"Товар не найден (id: {id})");
         }
         
         try
@@ -98,7 +98,7 @@ public class ProductService : IProductService
             await _productRepository.DeleteAsync(id);
             await _productRepository.SaveChangesAsync();
 
-            Log.Information($"Product deleted: {product}).");
+            Log.Information($"Товар удален (id: {id}).");
         }
         catch (Exception ex)
         {
